@@ -8,4 +8,4 @@ export interface IRootWithModule {
   login: ILoginState
 }
 
-export type IStoreType = IRootState & IRootWithModule;
+export type IStoreType = IRootState & IRootWithModule

@@ -53,9 +53,9 @@ const components = [
   ElMain,
   ElAside,
   ElMenu,
-  ElSubmenu,
   ElMenuItem,
   ElMenuItemGroup,
+  ElSubmenu,
   ElDropdown,
   ElDropdownMenu,
   ElDropdownItem,
@@ -75,8 +75,9 @@ const components = [
   ElTree,
   ElCard
 ]
+
 export default function (app: App): void {
-  for (const cpn of components) {
-    app.component(cpn.name, cpn)
+  for (const component of components) {
+    app.component(component.name, component)
   }
 }
