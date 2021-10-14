@@ -5,14 +5,15 @@ import './assets/css/index.css'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import './service/axios_demo'
-import hyRequest from './service'
+import { setupStore } from './store/index'
 
 const app = createApp(App)
 app.use(registerApp)
-app.use(store).use(router).mount('#app')
+app.use(store).use(router)
+setupStore()
+app.mount('#app')
 
-console.log(process.env.VUE_APP_BASE_NAME)
+// console.log(process.env.VUE_APP_BASE_NAME)
 
 // //单独请求拦截器
 // hyRequest.request({
@@ -25,16 +26,16 @@ console.log(process.env.VUE_APP_BASE_NAME)
 //   }
 // })
 
-interface DataType {
-  data: any
-  returnCode: string
-  success: boolean
-}
-hyRequest
-  .request<DataType>({
-    url: '/home/multidata',
-    method: 'GET'
-  })
-  .then((res) => {
-    console.log(res)
-  })
+// interface DataType {
+//   data: any
+//   returnCode: string
+//   success: boolean
+// }
+// hyRequest
+//   .request<DataType>({
+//     url: '/home/multidata',
+//     method: 'GET'
+//   })
+//   .then((res) => {
+//     console.log(res)
+//   })
