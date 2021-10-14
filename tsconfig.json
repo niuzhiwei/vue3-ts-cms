@@ -11,9 +11,12 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
+    //具体要解析使用的类型
     "types": ["webpack-env"],
+    //路径解析
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "components/*":["src/components/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
