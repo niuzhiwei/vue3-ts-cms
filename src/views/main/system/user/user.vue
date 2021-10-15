@@ -1,18 +1,26 @@
 <template>
   <div class="user">
-    <hy-form v-bind="formConfig"></hy-form>
+    <page-search :formConfig="formConfig"></page-search>
     <div class="content"></div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import HyForm from '@/base-ui/form'
+import { useStore } from 'vuex'
 import { formConfig } from './config/search.config'
+import PageSearch from '@/components/page-search'
+
 export default defineComponent({
   name: 'user',
-  components: { HyForm },
+  components: { PageSearch },
   setup() {
+    const store = useStore()
+    store.dispatch('system/getPageListAction', {
+      pageUrl: '/user/list',
+      queryInfo: { offset: 0, size: 10 }
+    })
+
     return {
       formConfig
     }
