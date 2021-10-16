@@ -1,7 +1,7 @@
 import { Module } from 'vuex'
 import { ISystemState } from './types'
 import { IRootState } from '../../types'
-// import { } from '@/service/login/login'
+import { getPageListData } from '@/service/main/system/system'
 
 const SystemModule: Module<ISystemState, IRootState> = {
   namespaced: true,
@@ -12,10 +12,21 @@ const SystemModule: Module<ISystemState, IRootState> = {
     }
   },
   getters: {},
-  mutations: {},
+  mutations: {
+    changeUserList(state, userList: any[]) {
+      state.userList = userList
+    },
+    changeUserCount(state, userCount: number) {
+      state.userCount = userCount
+    }
+  },
   actions: {
-    getPageListAction({ commit }, payload: any) {
-      console.log(payload)
+    async getPageListAction({ commit }, payload: any) {
+      const { pageUrl, queryInfo } = payload
+      const result = await getPageListData(pageUrl, queryInfo)
+      const { list, totalCount } = result.data
+      commit('changeUserList', list)
+      commit('changeUserCount', totalCount)
     }
   }
 }

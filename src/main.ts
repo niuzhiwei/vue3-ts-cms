@@ -13,6 +13,7 @@ app.use(globalRegister)
 app.use(store)
 setupStore()
 app.use(router)
+
 app.mount('#app')
 
 // console.log(process.env.VUE_APP_BASE_NAME)

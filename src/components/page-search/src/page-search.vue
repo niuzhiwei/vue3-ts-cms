@@ -1,7 +1,7 @@
 <template>
   <hy-form v-bind="formConfig" v-model="formData">
     <template #header>
-      <h2 class="header">高级检索</h2>
+      <div class="header">高级检索</div>
     </template>
     <template #footer>
       <div class="handle-btns">
@@ -39,5 +39,14 @@ export default defineComponent({
 .handle-btns {
   text-align: right;
   padding: 0 50px 20px 0;
+}
+.header {
+  display: flex;
+  height: 45px;
+  padding: 0 5px;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 700;
 }
 </style>
