@@ -30,6 +30,16 @@
           >
         </div>
       </template>
+      <!-- 动态插入剩余插槽 -->
+      <template
+        v-for="item in otherPropsSlots"
+        key="item.prop"
+        #[item.slotName]="scope"
+      >
+        <template v-if="item.slotName">
+          <slot :name="item.slotName" :row="scope.row"></slot>
+        </template>
+      </template>
       <template #header-handler>
         <el-button type="primary" size="medium">新建用户</el-button>
       </template>
@@ -83,7 +93,18 @@ export default defineComponent({
       store.getters['system/pageListCount'](props.pageName)
     )
 
-    return { userList, getPageData, dataCount, pageInfo }
+    //获取其他的动态插槽名称
+    const otherPropsSlots = props.contentTableConfig?.propList.filter(
+      (item: any) => {
+        if (item.slotName === 'enable') return false
+        if (item.slotName === 'createAt') return false
+        if (item.slotName === 'updateAt') return false
+        if (item.slotName === 'handler') return false
+        return true
+      }
+    )
+
+    return { userList, getPageData, dataCount, pageInfo, otherPropsSlots }
   }
 })
 </script>

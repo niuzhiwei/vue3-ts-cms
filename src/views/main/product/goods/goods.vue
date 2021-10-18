@@ -4,7 +4,26 @@
       :contentTableConfig="contentTableConfig"
       pageName="Goods"
       ref="pageContentRef"
-    ></page-content>
+    >
+      <template #image="scope">
+        <el-image
+          style="width: 60px; height: 100px"
+          :src="scope.row.imgUrl"
+          :preview-src-list="[scope.row.imgUrl]"
+        ></el-image>
+      </template>
+      <template #oldPrice="scope">
+        {{ '￥' + scope.row.oldPrice }}
+      </template>
+      <template #status="scope">
+        <el-button
+          plain
+          size="mini"
+          :type="scope.row.status ? 'success' : 'danger'"
+          >{{ scope.row.status ? '启用' : '禁用' }}</el-button
+        >
+      </template>
+    </page-content>
   </div>
 </template>
 
