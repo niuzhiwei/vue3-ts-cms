@@ -20,9 +20,14 @@
       <template #updateAt="scope">
         <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
       </template>
-      <template #handler>
+      <template #handler="scope">
         <div class="handle-btns">
-          <el-button v-if="isUpdate" icon="el-icon-edit" size="mini" type="text"
+          <el-button
+            v-if="isUpdate"
+            icon="el-icon-edit"
+            size="mini"
+            type="text"
+            @click="handleEditClick(scope.row)"
             >编辑</el-button
           >
           <el-button
@@ -30,6 +35,7 @@
             icon="el-icon-delete"
             size="mini"
             type="text"
+            @click="handleDeleteClick(scope.row)"
             >删除</el-button
           >
         </div>
@@ -44,9 +50,14 @@
           <slot :name="item.slotName" :row="scope.row"></slot>
         </template>
       </template>
+      <!-- 操作按钮 -->
       <template #header-handler>
-        <el-button v-if="isCreate" type="primary" size="medium"
-          >新建用户</el-button
+        <el-button
+          v-if="isCreate"
+          type="primary"
+          size="medium"
+          @click="handleNewClick"
+          >新建</el-button
         >
       </template>
     </hy-table>
@@ -71,7 +82,8 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  emits: ['newBtnClick', 'editBtnClick'],
+  setup(props, { emit }) {
     const store = useStore()
 
     //双向绑定pageInfo
@@ -118,6 +130,19 @@ export default defineComponent({
         return true
       }
     )
+    //删除/编辑/新建操作
+    const handleDeleteClick = (item: any) => {
+      store.dispatch('system/deletePageDataAction', {
+        pageName: props.pageName,
+        id: item.id
+      })
+    }
+    const handleNewClick = () => {
+      emit('newBtnClick')
+    }
+    const handleEditClick = (item: any) => {
+      emit('editBtnClick', item)
+    }
 
     return {
       userList,
@@ -128,7 +153,10 @@ export default defineComponent({
       isCreate,
       isUpdate,
       isDelete,
-      isQuery
+      isQuery,
+      handleDeleteClick,
+      handleNewClick,
+      handleEditClick
     }
   }
 })

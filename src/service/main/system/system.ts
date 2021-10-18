@@ -7,3 +7,8 @@ export function getPageListData(url: string, queryInfo: any) {
     data: queryInfo
   })
 }
+export function deletePageData(url: string) {
+  return hyRequest.delete<IDataType>({
+    url
+  })
+}
