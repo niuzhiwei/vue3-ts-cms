@@ -12,7 +12,9 @@ const SystemModule: Module<ISystemState, IRootState> = {
       roleList: [],
       roleCount: 0,
       goodsList: [],
-      goodsCount: 0
+      goodsCount: 0,
+      menuList: [],
+      menuCount: 0
     }
   },
   getters: {
@@ -25,6 +27,8 @@ const SystemModule: Module<ISystemState, IRootState> = {
             return state.roleList
           case 'Goods':
             return state.goodsList
+          case 'Menu':
+            return state.menuList
         }
       }
     },
@@ -37,6 +41,8 @@ const SystemModule: Module<ISystemState, IRootState> = {
             return state.roleCount
           case 'Goods':
             return state.goodsCount
+          case 'Menu':
+            return state.menuCount
         }
       }
     }
@@ -59,6 +65,12 @@ const SystemModule: Module<ISystemState, IRootState> = {
     },
     changeGoodsCount(state, goodsCount: number) {
       state.goodsCount = goodsCount
+    },
+    changeMenuList(state, menuList: any[]) {
+      state.menuList = menuList
+    },
+    changeMenuCount(state, menuCount: number) {
+      state.menuCount = menuCount
     }
   },
   actions: {
@@ -74,6 +86,9 @@ const SystemModule: Module<ISystemState, IRootState> = {
           break
         case 'Goods':
           pageUrl = '/goods/list'
+          break
+        case 'Menu':
+          pageUrl = '/menu/list'
           break
       }
       //发送请求
