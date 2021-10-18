@@ -8,12 +8,7 @@
         </div>
       </slot>
     </div>
-    <el-table
-      :data="listData"
-      border
-      style="width: 100%"
-      @selection-change="handleSelectionChange"
-    >
+    <el-table :data="listData" border style="width: 100%">
       <el-table-column
         v-if="showSelectColumn"
         type="selection"
@@ -28,7 +23,7 @@
         width="80"
       ></el-table-column>
       <template v-for="propItem in propList" :key="propItem.prop">
-        <el-table-column v-bind="propItem" align="center">
+        <el-table-column show-overflow-tooltip v-bind="propItem" align="center">
           <template #default="scope">
             <slot :name="propItem.slotName" :row="scope.row">
               {{ scope.row[propItem.prop] }}
@@ -40,13 +35,13 @@
     <div class="footer">
       <slot name="footer">
         <el-pagination
-          v-model:currentPage="currentPage4"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
+          :current-page="page.currentPage"
+          :page-size="page.pageSize"
+          :page-sizes="[10, 20, 30, 40]"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="listCount"
         >
         </el-pagination>
       </slot>
@@ -66,6 +61,10 @@ export default defineComponent({
       type: Array,
       required: true
     },
+    listCount: {
+      type: Number,
+      defalut: 0
+    },
     propList: {
       type: Array,
       required: true
@@ -77,14 +76,28 @@ export default defineComponent({
     showSelectColumn: {
       type: Boolean,
       default: false
+    },
+    page: {
+      type: Object,
+      default: () => ({ currentPage: 0, pageSize: 10 })
     }
   },
-  emits: ['selectionChange'],
+  emits: ['selectionChange', 'update:page'],
   setup(props, { emit }) {
     const handleSelectionChange = (value: any) => {
       emit('selectionChange', value)
     }
-    return { handleSelectionChange }
+    const handleSizeChange = (pageSize: number) => {
+      emit('update:page', { ...props.page, pageSize })
+    }
+    const handleCurrentChange = (currentPage: number) => {
+      emit('update:page', { ...props.page, currentPage })
+    }
+    return {
+      handleSelectionChange,
+      handleSizeChange,
+      handleCurrentChange
+    }
   }
 })
 </script>
@@ -102,5 +115,8 @@ export default defineComponent({
   .handler {
     align-items: center;
   }
+}
+.footer {
+  text-align: ;
 }
 </style>
