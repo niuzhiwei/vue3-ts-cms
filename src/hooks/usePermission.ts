@@ -17,6 +17,9 @@ export function usePermission(pageName: string, handleName: string) {
     case 'Menu':
       verifyPermission = `system:menu:${handleName}`
       break
+    case 'Department':
+      verifyPermission = `system:department:${handleName}`
+      break
   }
   return !!permissions.find((item) => item === verifyPermission)
 }

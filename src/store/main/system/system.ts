@@ -1,7 +1,12 @@
 import { Module } from 'vuex'
 import { ISystemState } from './types'
 import { IRootState } from '../../types'
-import { getPageListData, deletePageData } from '@/service/main/system/system'
+import {
+  getPageListData,
+  deletePageData,
+  createPageData,
+  editPageData
+} from '@/service/main/system/system'
 
 const SystemModule: Module<ISystemState, IRootState> = {
   namespaced: true,
@@ -14,7 +19,9 @@ const SystemModule: Module<ISystemState, IRootState> = {
       goodsList: [],
       goodsCount: 0,
       menuList: [],
-      menuCount: 0
+      menuCount: 0,
+      departmentList: [],
+      departmentCount: 0
     }
   },
   getters: {
@@ -29,6 +36,8 @@ const SystemModule: Module<ISystemState, IRootState> = {
             return state.goodsList
           case 'Menu':
             return state.menuList
+          case 'Department':
+            return state.departmentList
         }
       }
     },
@@ -41,8 +50,8 @@ const SystemModule: Module<ISystemState, IRootState> = {
             return state.roleCount
           case 'Goods':
             return state.goodsCount
-          case 'Menu':
-            return state.menuCount
+          case 'Department':
+            return state.departmentCount
         }
       }
     }
@@ -71,6 +80,12 @@ const SystemModule: Module<ISystemState, IRootState> = {
     },
     changeMenuCount(state, menuCount: number) {
       state.menuCount = menuCount
+    },
+    changeDepartmentList(state, departmentList: any[]) {
+      state.departmentList = departmentList
+    },
+    changeDepartmentCount(state, departmentCount: number) {
+      state.departmentCount = departmentCount
     }
   },
   actions: {
@@ -89,6 +104,9 @@ const SystemModule: Module<ISystemState, IRootState> = {
           break
         case 'Menu':
           pageUrl = '/menu/list'
+          break
+        case 'Department':
+          pageUrl = '/department/list'
           break
       }
       //发送请求
@@ -113,8 +131,66 @@ const SystemModule: Module<ISystemState, IRootState> = {
         case 'Menu':
           pageUrl = '/menu/' + id
           break
+        case 'Department':
+          pageUrl = '/department/' + id
       }
       await deletePageData(pageUrl)
+      dispatch('getPageListAction', {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      })
+    },
+    async createPageDataAction({ dispatch }, payload: any) {
+      const { pageName, queryInfo } = payload
+      let pageUrl = ''
+      switch (pageName) {
+        case 'User':
+          pageUrl = '/users'
+          break
+        case 'Role':
+          pageUrl = '/role'
+          break
+        case 'Goods':
+          pageUrl = '/goods'
+          break
+        case 'Menu':
+          pageUrl = '/menu'
+          break
+        case 'Department':
+          pageUrl = '/department'
+      }
+      await createPageData(pageUrl, queryInfo)
+      dispatch('getPageListAction', {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      })
+    },
+    async editPageDataAction({ dispatch }, payload: any) {
+      const { pageName, queryInfo, id } = payload
+      let pageUrl = ''
+      switch (pageName) {
+        case 'User':
+          pageUrl = '/users/' + id
+          break
+        case 'Role':
+          pageUrl = '/role/' + id
+          break
+        case 'Goods':
+          pageUrl = '/goods/' + id
+          break
+        case 'Menu':
+          pageUrl = '/menu/' + id
+          break
+        case 'Department':
+          pageUrl = '/department/' + id
+      }
+      await editPageData(pageUrl, queryInfo)
       dispatch('getPageListAction', {
         pageName,
         queryInfo: {
