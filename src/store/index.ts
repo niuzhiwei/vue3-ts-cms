@@ -45,5 +45,4 @@ export function useStore(): Store<IStoreType> {
 }
 export function setupStore() {
   store.dispatch('login/loadLocalLogin')
-  store.dispatch('getInitialDataAction')
 }
