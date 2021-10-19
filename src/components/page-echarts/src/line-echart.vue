@@ -7,7 +7,6 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
 import BaseEchart from '@/base-ui/echart'
-import { IDataType } from '../types'
 
 export default defineComponent({
   components: { BaseEchart },
