@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import PageModal from '@/components/page-modal'
-type CallbackType = () => void
+type CallbackType = (item?: any) => void
 
 export function usePageModal(
   newCallback?: CallbackType,
@@ -21,7 +21,7 @@ export function usePageModal(
     if (pageModalRef.value) {
       pageModalRef.value.centerVisible = true
     }
-    editCallback && editCallback()
+    editCallback && editCallback(item)
   }
   return [pageModalRef, defaultInfo, handleNewData, handleEditData]
 }
