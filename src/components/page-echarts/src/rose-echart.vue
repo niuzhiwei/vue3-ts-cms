@@ -31,7 +31,7 @@ export default defineComponent({
           {
             name: '商品数量',
             type: 'pie',
-            radius: [10, 100],
+            radius: [10, 80],
             center: ['50%', '50%'],
             roseType: 'area',
             itemStyle: {

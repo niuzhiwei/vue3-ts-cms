@@ -18,7 +18,7 @@ export default defineComponent({
     },
     height: {
       type: String,
-      default: '400px'
+      default: '300px'
     },
     options: {
       type: Object as PropType<EChartsOption>,
